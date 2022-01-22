@@ -5,7 +5,9 @@ const rB = require('react-bootstrap');
 const AppActions = require('../actions/AppActions');
 const AppStatus = require('./AppStatus');
 const DisplayError = require('./DisplayError');
-const Example = require('./Example');
+const Manage = require('./Manage');
+const Notification = require('./Notification');
+const WebhookTable = require('./WebhookTable');
 
 const cE = React.createElement;
 
@@ -69,16 +71,38 @@ class MyApp extends React.Component {
                      cE(rB.Panel.Body, null,
                         cE(rB.Panel, null,
                            cE(rB.Panel.Heading, null,
-                              cE(rB.Panel.Title, null, 'Counter')
+                              cE(rB.Panel.Title, null, 'Manage')
                              ),
                            cE(rB.Panel.Body, null,
-                              cE(Example, {
+                              cE(Manage, {
                                   ctx: this.props.ctx,
-                                  counter: this.state.counter,
-                                  increment: this.state.increment
+                                  topic: this.state.topic
                               })
                              )
-                          )
+                          ),
+                        cE(rB.Panel, null,
+                           cE(rB.Panel.Heading, null,
+                              cE(rB.Panel.Title, null, 'Webhooks')
+                             ),
+                           cE(rB.Panel.Body, null,
+                              cE(WebhookTable, {
+                                  webhooks: this.state.webhooks
+                              })
+                             )
+                          ),
+                        cE(rB.Panel, null,
+                           cE(rB.Panel.Heading, null,
+                              cE(rB.Panel.Title, null, 'Last Notification')
+                             ),
+                           cE(rB.Panel.Body, null,
+                              cE(Notification, {
+                                  ctx: this.props.ctx,
+                                  lastNotif: this.state.lastNotif
+                              })
+                             )
+                          ),
+
+
                        )
                     )
                  );
