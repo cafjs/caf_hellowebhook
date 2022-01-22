@@ -12,16 +12,25 @@ class Manage extends React.Component {
         this.doRegister = this.doRegister.bind(this);
         this.doUnregister = this.doUnregister.bind(this);
         this.handleTopic = this.handleTopic.bind(this);
-        this.state = {topicName: ''};
+        this.handleSecret = this.handleSecret.bind(this);
+        this.state = {
+            topicName: '',
+            secret: ''
+        };
     }
 
     handleTopic(e) {
         this.setState({topicName: e.target.value});
     }
 
+    handleSecret(e) {
+        this.setState({secret: e.target.value});
+    }
+
     doRegister() {
         if (this.state.topicName) {
-            AppActions.register(this.props.ctx, this.state.topicName);
+            AppActions.register(this.props.ctx, this.state.topicName,
+                                this.state.secret);
         } else {
             const err = new Error('No topic');
             AppActions.setError(this.props.ctx, err);
@@ -39,7 +48,7 @@ class Manage extends React.Component {
 
     render() {
         return cE(rB.Form, {horizontal: true},
-                  cE(rB.FormGroup, {controlId: 'incId', bsSize: 'large'},
+                  cE(rB.FormGroup, {controlId: 'incId'},
                      cE(rB.Col, {sm:2, xs: 12},
                         cE(rB.ControlLabel, null, 'Topic')
                        ),
@@ -50,8 +59,23 @@ class Manage extends React.Component {
                             placeholder: '',
                             onChange: this.handleTopic
                         })
+                       )
+                    ),
+                  cE(rB.FormGroup, {controlId: 'secretId'},
+                     cE(rB.Col, {sm:2, xs: 12},
+                        cE(rB.ControlLabel, null, 'Secret')
                        ),
-                     cE(rB.Col, {sm:6, xs: 12},
+                     cE(rB.Col, {sm:4, xs: 12},
+                        cE(rB.FormControl, {
+                            type: 'password',
+                            value: this.state.secret,
+                            placeholder: '',
+                            onChange: this.handleSecret
+                        })
+                       )
+                    ),
+                   cE(rB.FormGroup, {controlId: 'buttonId'},
+                      cE(rB.Col, {smOffset:2, xs: 12},
                         cE(rB.ButtonGroup, null,
                            cE(rB.Button, {
                                bsStyle: 'primary',
@@ -63,7 +87,7 @@ class Manage extends React.Component {
                            }, 'Unregister')
                           )
                        )
-                    )
+                     )
                  );
     }
 }
