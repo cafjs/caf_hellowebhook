@@ -17,7 +17,7 @@ class Notification extends React.Component {
                          className: 'url-text',
                          style: {wordWrap: 'break-word'}
                      },
-                     this.props.lastNotif)
+                     JSON.stringify(this.props.lastNotif) || '')
                  );
     }
 }
